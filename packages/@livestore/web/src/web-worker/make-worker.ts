@@ -145,14 +145,24 @@ const makeWorkerRunner = ({ schema }: WorkerOptions) =>
 
           if (syncImpl !== undefined) {
             // TODO try to do this in a batched-way if possible
-            yield* syncImpl.pushes.pipe(
-              Stream.tapSync(({ mutationEventEncoded, persisted }) =>
-                applyMutation(mutationEventEncoded, { syncStatus: 'synced', shouldBroadcast: true, persisted }),
-              ),
-              Stream.runDrain,
-              Effect.tapCauseLogPretty,
-              Effect.forkScoped,
-            )
+            yield *
+              syncImpl.pushes.pipe(
+                Stream.filter(({ mutationEventEncoded }) => {
+                  // Electric does not expose if an operation was originated locally with the notifier. Need to fix that.
+                  const cursor = dbLog.dbRef.current.selectValue(
+                    sql`SELECT id FROM ${MUTATION_LOG_META_TABLE} WHERE syncStatus = 'synced' ORDER BY id DESC LIMIT 1`,
+                  )
+
+                  return typeof cursor === 'string' && cursor < mutationEventEncoded.id
+                }),
+                Stream.tapSync(() => console.log('going to apply mutation')),
+                Stream.tapSync(({ mutationEventEncoded, persisted }) =>
+                  applyMutation(mutationEventEncoded, { syncStatus: 'synced', shouldBroadcast: true, persisted }),
+                ),
+                Stream.runDrain,
+                Effect.tapCauseLogPretty,
+                Effect.forkScoped,
+              )
           }
 
           broadcastChannel.addEventListener('message', (event) => {

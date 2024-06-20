@@ -1,66 +1,131 @@
 /// <reference lib="dom" />
 
 import type { SyncImpl } from '@livestore/common'
-import { InvalidPullError, InvalidPushError } from '@livestore/common'
-import { cuid } from '@livestore/utils/cuid'
 import type { Scope } from '@livestore/utils/effect'
 import { Deferred, Effect, PubSub, Queue, Schema, Stream, SubscriptionRef } from '@livestore/utils/effect'
 
 import { WSMessage } from '../common/index.js'
+import { ElectricConfig } from 'electric-sql'
+import { Electric, schema } from '../generated/client/index.js'
+import { insecureAuthToken } from 'electric-sql/auth'
+import { MutationEvent } from '@livestore/common/schema'
 
+// TODO: remove all stiff from CF worker
 export const makeWsSync = (wsBaseUrl: string, roomId: string): Effect.Effect<SyncImpl, never, Scope.Scope> =>
   Effect.gen(function* () {
     const wsUrl = `${wsBaseUrl}/websocket?room=${roomId}`
 
-    const { isConnected, incomingMessages, send } = yield* connect(wsUrl)
+    const config: ElectricConfig = {
+      url: 'ws://localhost:5133',
+      debug: true,
+      disableForeignKeysDownstream: true,
+    }
 
+    const dbName = `livestore-${roomId}`
+    const electric: Electric = yield* Effect.promise(async () => {
+      const { electrify, ElectricDatabase } = await import('electric-sql/wa-sqlite')
+      const conn = await ElectricDatabase.init(dbName)
+      return electrify(conn, schema, config)
+    })
+
+    let userId = 'FAKE_USER_ID'
+    const authToken = insecureAuthToken({ sub: userId })
+    yield* Effect.promise(() => electric.connect(authToken))
+
+    const { isConnected } = yield* connect(wsUrl)
+
+    const queue = yield* Queue.bounded<MutationEvent.AnyEncoded>(100)
+
+    const _unsubConnectivityCb = electric.notifier.subscribeToConnectivityStateChanges((event) => {
+      Effect.runSync(
+        Effect.sync(() =>{
+          console.log("isConnected")
+          event.connectivityState.status === 'connected'
+            ? SubscriptionRef.set(isConnected, true)
+            : SubscriptionRef.set(isConnected, false)
+          }
+        ),
+      )
+    })
+
+    const _unsubDataChangeFunc = electric.notifier.subscribeToDataChanges((notification) => {
+      if (notification.origin !== 'remote') {
+        return
+      }
+
+      const pks = notification.changes
+        .filter((_) => _.recordChanges !== undefined)
+        .flatMap((_) => _.recordChanges)
+        .map((_) => _!.primaryKey)
+
+      const pushChanges = Stream.fromIterable(pks).pipe(
+        Stream.map((pk) =>
+          Effect.promise(() =>
+            electric.db.mutation_log.findFirst({
+              where: {
+                id: pk!.id as string,
+              },
+            }),
+          ),
+        ),
+        Stream.map((_) =>
+          Effect.runPromise(_)
+            .then((row) => ({
+              id: row!.id,
+              mutation: row!.mutation,
+              args: JSON.parse(row!.argsjson),
+            }))
+            .then((_) => {
+              console.log('enqueueing mutation', _)
+              Queue.offer(queue, _).pipe(Effect.runSync)
+            }),
+        ),
+        Stream.runDrain,
+      )
+
+      Effect.runPromise(pushChanges)
+    })
     const api = {
       isConnected,
       pull: (cursor) =>
         Effect.gen(function* () {
-          const requestId = cuid()
+          console.log('pulling from electric')
 
-          yield* send(WSMessage.PullReq.make({ cursor, requestId }))
+          const events: MutationEvent.AnyEncoded[] = yield* Effect.promise(async () => {
+            const { synced } = await electric.db.mutation_log.sync()
+            await synced
 
-          return Stream.fromPubSub(incomingMessages).pipe(
-            Stream.filter((_) => _.requestId === requestId),
-            Stream.tap((_) =>
-              _._tag === 'WSMessage.Error' ? new InvalidPullError({ message: _.message }) : Effect.void,
-            ),
-            Stream.filter(Schema.is(WSMessage.PullRes)),
-            Stream.takeUntil((_) => _.hasMore === false),
-            Stream.map((_) => _.events),
-            Stream.flattenIterables,
-          )
+            const mutations = await electric.db.mutation_log.findMany()
+            return mutations
+              .map((row: any) => ({
+                id: row.id,
+                mutation: row.mutation,
+                args: JSON.parse(row.argsjson),
+              }))
+              .filter((_) => (cursor ? _.id > cursor : true))
+          })
+
+          return Stream.fromIterable(events)
         }).pipe(Stream.unwrap),
-      pushes: Stream.fromPubSub(incomingMessages).pipe(
-        Stream.filter(Schema.is(WSMessage.PushBroadcast)),
-        Stream.map((_) => ({ mutationEventEncoded: _.mutationEventEncoded, persisted: _.persisted })),
-      ),
+      pushes: Stream.fromQueue(queue).pipe(Stream.map((_) => ({ mutationEventEncoded: _, persisted: true }))), // TODO: not sure what persisted means
       push: (mutationEventEncoded, persisted) =>
         Effect.gen(function* () {
-          const ready = yield* Deferred.make<void, InvalidPushError>()
-          const requestId = cuid()
-
-          yield* Stream.fromPubSub(incomingMessages).pipe(
-            Stream.filter((_) => _.requestId === requestId),
-            Stream.tap((_) =>
-              _._tag === 'WSMessage.Error'
-                ? Deferred.fail(ready, new InvalidPushError({ message: _.message }))
-                : Effect.void,
-            ),
-            Stream.filter(Schema.is(WSMessage.PushAck)),
-            Stream.filter((_) => _.mutationId === mutationEventEncoded.id),
-            Stream.take(1),
-            Stream.tap(() => Deferred.succeed(ready, void 0)),
-            Stream.runDrain,
-            Effect.tapCauseLogPretty,
-            Effect.fork,
+          // TODO: mutation schema needs to be simplified
+          // TODO: need to hanhdle connectivity events
+          // TODO: here we don't wait for any ack from the server, while original impl would
+          // We're not sending persistend events to electruc
+          yield* Effect.promise(async () =>
+            electric?.db.mutation_log.create({
+              data: {
+                id: mutationEventEncoded.id,
+                mutation: mutationEventEncoded.mutation,
+                argsjson: JSON.stringify(mutationEventEncoded.args ?? {}),
+                schemahash: 0,
+                createdat: '',
+                syncstatus: 'synced',
+              },
+            }),
           )
-
-          yield* send(WSMessage.PushReq.make({ mutationEventEncoded, requestId, persisted }))
-
-          yield* Deferred.await(ready)
         }),
     } satisfies SyncImpl
 
@@ -128,6 +193,7 @@ const connect = (wsUrl: string) =>
 
       yield* Effect.addFinalizer(() =>
         Effect.gen(function* () {
+          // TODO: remove event listeners here
           ws.removeEventListener('message', messageHandler)
           self.removeEventListener('offline', offlineHandler)
           wsRef.current?.close()
