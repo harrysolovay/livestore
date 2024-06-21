@@ -94,7 +94,7 @@ const makeWorkerRunner = ({ schema }: WorkerOptions) =>
           ).pipe(Effect.catchAll(() => Effect.succeed(undefined)))
 
           const syncImpl =
-            syncOptions === undefined ? undefined : yield* makeWsSync(syncOptions.url, syncOptions.roomId)
+            syncOptions === undefined ? undefined : yield* makeWsSync(syncOptions.roomId)
 
           const keySuffix = key ? `-${key}` : ''
 
@@ -155,7 +155,6 @@ const makeWorkerRunner = ({ schema }: WorkerOptions) =>
 
                   return typeof cursor === 'string' && cursor < mutationEventEncoded.id
                 }),
-                Stream.tapSync(() => console.log('going to apply mutation')),
                 Stream.tapSync(({ mutationEventEncoded, persisted }) =>
                   applyMutation(mutationEventEncoded, { syncStatus: 'synced', shouldBroadcast: true, persisted }),
                 ),
