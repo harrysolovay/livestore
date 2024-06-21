@@ -13,7 +13,7 @@ import pgMigrations from './pg-migrations.js';
 // ENUMS
 /////////////////////////////////////////
 
-export const Mutation_logScalarFieldEnumSchema = z.enum(['id','mutation','argsjson','schemahash','createdat','syncstatus']);
+export const Mutation_logScalarFieldEnumSchema = z.enum(['id','mutation','argsjson']);
 
 export const QueryModeSchema = z.enum(['default','insensitive']);
 
@@ -32,9 +32,6 @@ export const Mutation_logSchema = z.object({
   id: z.string(),
   mutation: z.string(),
   argsjson: z.string(),
-  schemahash: z.number().int().gte(-2147483648).lte(2147483647),
-  createdat: z.string(),
-  syncstatus: z.string(),
 })
 
 export type Mutation_log = z.infer<typeof Mutation_logSchema>
@@ -50,9 +47,6 @@ export const Mutation_logSelectSchema: z.ZodType<Prisma.Mutation_logSelect> = z.
   id: z.boolean().optional(),
   mutation: z.boolean().optional(),
   argsjson: z.boolean().optional(),
-  schemahash: z.boolean().optional(),
-  createdat: z.boolean().optional(),
-  syncstatus: z.boolean().optional(),
 }).strict()
 
 
@@ -67,18 +61,12 @@ export const Mutation_logWhereInputSchema: z.ZodType<Prisma.Mutation_logWhereInp
   id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   mutation: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   argsjson: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  schemahash: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
-  createdat: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  syncstatus: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
 }).strict();
 
 export const Mutation_logOrderByWithRelationInputSchema: z.ZodType<Prisma.Mutation_logOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   mutation: z.lazy(() => SortOrderSchema).optional(),
-  argsjson: z.lazy(() => SortOrderSchema).optional(),
-  schemahash: z.lazy(() => SortOrderSchema).optional(),
-  createdat: z.lazy(() => SortOrderSchema).optional(),
-  syncstatus: z.lazy(() => SortOrderSchema).optional()
+  argsjson: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const Mutation_logWhereUniqueInputSchema: z.ZodType<Prisma.Mutation_logWhereUniqueInput> = z.object({
@@ -89,14 +77,9 @@ export const Mutation_logOrderByWithAggregationInputSchema: z.ZodType<Prisma.Mut
   id: z.lazy(() => SortOrderSchema).optional(),
   mutation: z.lazy(() => SortOrderSchema).optional(),
   argsjson: z.lazy(() => SortOrderSchema).optional(),
-  schemahash: z.lazy(() => SortOrderSchema).optional(),
-  createdat: z.lazy(() => SortOrderSchema).optional(),
-  syncstatus: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => Mutation_logCountOrderByAggregateInputSchema).optional(),
-  _avg: z.lazy(() => Mutation_logAvgOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => Mutation_logMaxOrderByAggregateInputSchema).optional(),
-  _min: z.lazy(() => Mutation_logMinOrderByAggregateInputSchema).optional(),
-  _sum: z.lazy(() => Mutation_logSumOrderByAggregateInputSchema).optional()
+  _min: z.lazy(() => Mutation_logMinOrderByAggregateInputSchema).optional()
 }).strict();
 
 export const Mutation_logScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Mutation_logScalarWhereWithAggregatesInput> = z.object({
@@ -106,72 +89,48 @@ export const Mutation_logScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.
   id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   mutation: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   argsjson: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  schemahash: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
-  createdat: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  syncstatus: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
 }).strict();
 
 export const Mutation_logCreateInputSchema: z.ZodType<Prisma.Mutation_logCreateInput> = z.object({
   id: z.string(),
   mutation: z.string(),
-  argsjson: z.string(),
-  schemahash: z.number().int().gte(-2147483648).lte(2147483647),
-  createdat: z.string(),
-  syncstatus: z.string()
+  argsjson: z.string()
 }).strict();
 
 export const Mutation_logUncheckedCreateInputSchema: z.ZodType<Prisma.Mutation_logUncheckedCreateInput> = z.object({
   id: z.string(),
   mutation: z.string(),
-  argsjson: z.string(),
-  schemahash: z.number().int().gte(-2147483648).lte(2147483647),
-  createdat: z.string(),
-  syncstatus: z.string()
+  argsjson: z.string()
 }).strict();
 
 export const Mutation_logUpdateInputSchema: z.ZodType<Prisma.Mutation_logUpdateInput> = z.object({
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   mutation: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   argsjson: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  schemahash: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  createdat: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  syncstatus: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const Mutation_logUncheckedUpdateInputSchema: z.ZodType<Prisma.Mutation_logUncheckedUpdateInput> = z.object({
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   mutation: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   argsjson: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  schemahash: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  createdat: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  syncstatus: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const Mutation_logCreateManyInputSchema: z.ZodType<Prisma.Mutation_logCreateManyInput> = z.object({
   id: z.string(),
   mutation: z.string(),
-  argsjson: z.string(),
-  schemahash: z.number().int().gte(-2147483648).lte(2147483647),
-  createdat: z.string(),
-  syncstatus: z.string()
+  argsjson: z.string()
 }).strict();
 
 export const Mutation_logUpdateManyMutationInputSchema: z.ZodType<Prisma.Mutation_logUpdateManyMutationInput> = z.object({
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   mutation: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   argsjson: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  schemahash: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  createdat: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  syncstatus: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const Mutation_logUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Mutation_logUncheckedUpdateManyInput> = z.object({
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   mutation: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   argsjson: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  schemahash: z.union([ z.number().int().gte(-2147483648).lte(2147483647),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  createdat: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  syncstatus: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const StringFilterSchema: z.ZodType<Prisma.StringFilter> = z.object({
@@ -189,50 +148,22 @@ export const StringFilterSchema: z.ZodType<Prisma.StringFilter> = z.object({
   not: z.union([ z.string(),z.lazy(() => NestedStringFilterSchema) ]).optional(),
 }).strict();
 
-export const IntFilterSchema: z.ZodType<Prisma.IntFilter> = z.object({
-  equals: z.number().optional(),
-  in: z.number().array().optional(),
-  notIn: z.number().array().optional(),
-  lt: z.number().optional(),
-  lte: z.number().optional(),
-  gt: z.number().optional(),
-  gte: z.number().optional(),
-  not: z.union([ z.number(),z.lazy(() => NestedIntFilterSchema) ]).optional(),
-}).strict();
-
 export const Mutation_logCountOrderByAggregateInputSchema: z.ZodType<Prisma.Mutation_logCountOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   mutation: z.lazy(() => SortOrderSchema).optional(),
-  argsjson: z.lazy(() => SortOrderSchema).optional(),
-  schemahash: z.lazy(() => SortOrderSchema).optional(),
-  createdat: z.lazy(() => SortOrderSchema).optional(),
-  syncstatus: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
-export const Mutation_logAvgOrderByAggregateInputSchema: z.ZodType<Prisma.Mutation_logAvgOrderByAggregateInput> = z.object({
-  schemahash: z.lazy(() => SortOrderSchema).optional()
+  argsjson: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const Mutation_logMaxOrderByAggregateInputSchema: z.ZodType<Prisma.Mutation_logMaxOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   mutation: z.lazy(() => SortOrderSchema).optional(),
-  argsjson: z.lazy(() => SortOrderSchema).optional(),
-  schemahash: z.lazy(() => SortOrderSchema).optional(),
-  createdat: z.lazy(() => SortOrderSchema).optional(),
-  syncstatus: z.lazy(() => SortOrderSchema).optional()
+  argsjson: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const Mutation_logMinOrderByAggregateInputSchema: z.ZodType<Prisma.Mutation_logMinOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   mutation: z.lazy(() => SortOrderSchema).optional(),
-  argsjson: z.lazy(() => SortOrderSchema).optional(),
-  schemahash: z.lazy(() => SortOrderSchema).optional(),
-  createdat: z.lazy(() => SortOrderSchema).optional(),
-  syncstatus: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
-export const Mutation_logSumOrderByAggregateInputSchema: z.ZodType<Prisma.Mutation_logSumOrderByAggregateInput> = z.object({
-  schemahash: z.lazy(() => SortOrderSchema).optional()
+  argsjson: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const StringWithAggregatesFilterSchema: z.ZodType<Prisma.StringWithAggregatesFilter> = z.object({
@@ -253,32 +184,8 @@ export const StringWithAggregatesFilterSchema: z.ZodType<Prisma.StringWithAggreg
   _max: z.lazy(() => NestedStringFilterSchema).optional()
 }).strict();
 
-export const IntWithAggregatesFilterSchema: z.ZodType<Prisma.IntWithAggregatesFilter> = z.object({
-  equals: z.number().optional(),
-  in: z.number().array().optional(),
-  notIn: z.number().array().optional(),
-  lt: z.number().optional(),
-  lte: z.number().optional(),
-  gt: z.number().optional(),
-  gte: z.number().optional(),
-  not: z.union([ z.number(),z.lazy(() => NestedIntWithAggregatesFilterSchema) ]).optional(),
-  _count: z.lazy(() => NestedIntFilterSchema).optional(),
-  _avg: z.lazy(() => NestedFloatFilterSchema).optional(),
-  _sum: z.lazy(() => NestedIntFilterSchema).optional(),
-  _min: z.lazy(() => NestedIntFilterSchema).optional(),
-  _max: z.lazy(() => NestedIntFilterSchema).optional()
-}).strict();
-
 export const StringFieldUpdateOperationsInputSchema: z.ZodType<Prisma.StringFieldUpdateOperationsInput> = z.object({
   set: z.string().optional()
-}).strict();
-
-export const IntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.IntFieldUpdateOperationsInput> = z.object({
-  set: z.number().optional(),
-  increment: z.number().optional(),
-  decrement: z.number().optional(),
-  multiply: z.number().optional(),
-  divide: z.number().optional()
 }).strict();
 
 export const NestedStringFilterSchema: z.ZodType<Prisma.NestedStringFilter> = z.object({
@@ -293,17 +200,6 @@ export const NestedStringFilterSchema: z.ZodType<Prisma.NestedStringFilter> = z.
   startsWith: z.string().optional(),
   endsWith: z.string().optional(),
   not: z.union([ z.string(),z.lazy(() => NestedStringFilterSchema) ]).optional(),
-}).strict();
-
-export const NestedIntFilterSchema: z.ZodType<Prisma.NestedIntFilter> = z.object({
-  equals: z.number().optional(),
-  in: z.number().array().optional(),
-  notIn: z.number().array().optional(),
-  lt: z.number().optional(),
-  lte: z.number().optional(),
-  gt: z.number().optional(),
-  gte: z.number().optional(),
-  not: z.union([ z.number(),z.lazy(() => NestedIntFilterSchema) ]).optional(),
 }).strict();
 
 export const NestedStringWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStringWithAggregatesFilter> = z.object({
@@ -323,7 +219,7 @@ export const NestedStringWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStri
   _max: z.lazy(() => NestedStringFilterSchema).optional()
 }).strict();
 
-export const NestedIntWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntWithAggregatesFilter> = z.object({
+export const NestedIntFilterSchema: z.ZodType<Prisma.NestedIntFilter> = z.object({
   equals: z.number().optional(),
   in: z.number().array().optional(),
   notIn: z.number().array().optional(),
@@ -331,23 +227,7 @@ export const NestedIntWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntWith
   lte: z.number().optional(),
   gt: z.number().optional(),
   gte: z.number().optional(),
-  not: z.union([ z.number(),z.lazy(() => NestedIntWithAggregatesFilterSchema) ]).optional(),
-  _count: z.lazy(() => NestedIntFilterSchema).optional(),
-  _avg: z.lazy(() => NestedFloatFilterSchema).optional(),
-  _sum: z.lazy(() => NestedIntFilterSchema).optional(),
-  _min: z.lazy(() => NestedIntFilterSchema).optional(),
-  _max: z.lazy(() => NestedIntFilterSchema).optional()
-}).strict();
-
-export const NestedFloatFilterSchema: z.ZodType<Prisma.NestedFloatFilter> = z.object({
-  equals: z.number().optional(),
-  in: z.number().array().optional(),
-  notIn: z.number().array().optional(),
-  lt: z.number().optional(),
-  lte: z.number().optional(),
-  gt: z.number().optional(),
-  gte: z.number().optional(),
-  not: z.union([ z.number(),z.lazy(() => NestedFloatFilterSchema) ]).optional(),
+  not: z.union([ z.number(),z.lazy(() => NestedIntFilterSchema) ]).optional(),
 }).strict();
 
 /////////////////////////////////////////
@@ -466,18 +346,6 @@ export const tableSchemas = {
       ],
       [
         "argsjson",
-        "TEXT"
-      ],
-      [
-        "schemahash",
-        "INT4"
-      ],
-      [
-        "createdat",
-        "TEXT"
-      ],
-      [
-        "syncstatus",
         "TEXT"
       ]
     ]),

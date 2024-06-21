@@ -119,10 +119,7 @@ export const makeWsSync = (wsBaseUrl: string, roomId: string): Effect.Effect<Syn
               data: {
                 id: mutationEventEncoded.id,
                 mutation: mutationEventEncoded.mutation,
-                argsjson: JSON.stringify(mutationEventEncoded.args ?? {}),
-                schemahash: 0,
-                createdat: '',
-                syncstatus: 'synced',
+                argsjson: JSON.stringify(mutationEventEncoded.args ?? {})                
               },
             }),
           )

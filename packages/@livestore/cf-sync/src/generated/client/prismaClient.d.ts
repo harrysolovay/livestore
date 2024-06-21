@@ -20,12 +20,6 @@ export type Mutation_log = {
   id: string
   mutation: string
   argsjson: string
-  /**
-   * @zod.number.int().gte(-2147483648).lte(2147483647)
-   */
-  schemahash: number
-  createdat: string
-  syncstatus: string
 }
 
 
@@ -816,82 +810,46 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
 
   export type AggregateMutation_log = {
     _count: Mutation_logCountAggregateOutputType | null
-    _avg: Mutation_logAvgAggregateOutputType | null
-    _sum: Mutation_logSumAggregateOutputType | null
     _min: Mutation_logMinAggregateOutputType | null
     _max: Mutation_logMaxAggregateOutputType | null
-  }
-
-  export type Mutation_logAvgAggregateOutputType = {
-    schemahash: number | null
-  }
-
-  export type Mutation_logSumAggregateOutputType = {
-    schemahash: number | null
   }
 
   export type Mutation_logMinAggregateOutputType = {
     id: string | null
     mutation: string | null
     argsjson: string | null
-    schemahash: number | null
-    createdat: string | null
-    syncstatus: string | null
   }
 
   export type Mutation_logMaxAggregateOutputType = {
     id: string | null
     mutation: string | null
     argsjson: string | null
-    schemahash: number | null
-    createdat: string | null
-    syncstatus: string | null
   }
 
   export type Mutation_logCountAggregateOutputType = {
     id: number
     mutation: number
     argsjson: number
-    schemahash: number
-    createdat: number
-    syncstatus: number
     _all: number
   }
 
-
-  export type Mutation_logAvgAggregateInputType = {
-    schemahash?: true
-  }
-
-  export type Mutation_logSumAggregateInputType = {
-    schemahash?: true
-  }
 
   export type Mutation_logMinAggregateInputType = {
     id?: true
     mutation?: true
     argsjson?: true
-    schemahash?: true
-    createdat?: true
-    syncstatus?: true
   }
 
   export type Mutation_logMaxAggregateInputType = {
     id?: true
     mutation?: true
     argsjson?: true
-    schemahash?: true
-    createdat?: true
-    syncstatus?: true
   }
 
   export type Mutation_logCountAggregateInputType = {
     id?: true
     mutation?: true
     argsjson?: true
-    schemahash?: true
-    createdat?: true
-    syncstatus?: true
     _all?: true
   }
 
@@ -938,18 +896,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: Mutation_logAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Mutation_logSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: Mutation_logMinAggregateInputType
@@ -980,8 +926,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     take?: number
     skip?: number
     _count?: Mutation_logCountAggregateInputType | true
-    _avg?: Mutation_logAvgAggregateInputType
-    _sum?: Mutation_logSumAggregateInputType
     _min?: Mutation_logMinAggregateInputType
     _max?: Mutation_logMaxAggregateInputType
   }
@@ -991,12 +935,7 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id: string
     mutation: string
     argsjson: string
-    schemahash: number
-    createdat: string
-    syncstatus: string
     _count: Mutation_logCountAggregateOutputType | null
-    _avg: Mutation_logAvgAggregateOutputType | null
-    _sum: Mutation_logSumAggregateOutputType | null
     _min: Mutation_logMinAggregateOutputType | null
     _max: Mutation_logMaxAggregateOutputType | null
   }
@@ -1019,9 +958,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id?: boolean
     mutation?: boolean
     argsjson?: boolean
-    schemahash?: boolean
-    createdat?: boolean
-    syncstatus?: boolean
   }
 
 
@@ -1790,10 +1726,7 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
   export const Mutation_logScalarFieldEnum: {
     id: 'id',
     mutation: 'mutation',
-    argsjson: 'argsjson',
-    schemahash: 'schemahash',
-    createdat: 'createdat',
-    syncstatus: 'syncstatus'
+    argsjson: 'argsjson'
   };
 
   export type Mutation_logScalarFieldEnum = (typeof Mutation_logScalarFieldEnum)[keyof typeof Mutation_logScalarFieldEnum]
@@ -1837,18 +1770,12 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id?: StringFilter | string
     mutation?: StringFilter | string
     argsjson?: StringFilter | string
-    schemahash?: IntFilter | number
-    createdat?: StringFilter | string
-    syncstatus?: StringFilter | string
   }
 
   export type Mutation_logOrderByWithRelationInput = {
     id?: SortOrder
     mutation?: SortOrder
     argsjson?: SortOrder
-    schemahash?: SortOrder
-    createdat?: SortOrder
-    syncstatus?: SortOrder
   }
 
   export type Mutation_logWhereUniqueInput = {
@@ -1859,14 +1786,9 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id?: SortOrder
     mutation?: SortOrder
     argsjson?: SortOrder
-    schemahash?: SortOrder
-    createdat?: SortOrder
-    syncstatus?: SortOrder
     _count?: Mutation_logCountOrderByAggregateInput
-    _avg?: Mutation_logAvgOrderByAggregateInput
     _max?: Mutation_logMaxOrderByAggregateInput
     _min?: Mutation_logMinOrderByAggregateInput
-    _sum?: Mutation_logSumOrderByAggregateInput
   }
 
   export type Mutation_logScalarWhereWithAggregatesInput = {
@@ -1876,72 +1798,48 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id?: StringWithAggregatesFilter | string
     mutation?: StringWithAggregatesFilter | string
     argsjson?: StringWithAggregatesFilter | string
-    schemahash?: IntWithAggregatesFilter | number
-    createdat?: StringWithAggregatesFilter | string
-    syncstatus?: StringWithAggregatesFilter | string
   }
 
   export type Mutation_logCreateInput = {
     id: string
     mutation: string
     argsjson: string
-    schemahash: number
-    createdat: string
-    syncstatus: string
   }
 
   export type Mutation_logUncheckedCreateInput = {
     id: string
     mutation: string
     argsjson: string
-    schemahash: number
-    createdat: string
-    syncstatus: string
   }
 
   export type Mutation_logUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     mutation?: StringFieldUpdateOperationsInput | string
     argsjson?: StringFieldUpdateOperationsInput | string
-    schemahash?: IntFieldUpdateOperationsInput | number
-    createdat?: StringFieldUpdateOperationsInput | string
-    syncstatus?: StringFieldUpdateOperationsInput | string
   }
 
   export type Mutation_logUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     mutation?: StringFieldUpdateOperationsInput | string
     argsjson?: StringFieldUpdateOperationsInput | string
-    schemahash?: IntFieldUpdateOperationsInput | number
-    createdat?: StringFieldUpdateOperationsInput | string
-    syncstatus?: StringFieldUpdateOperationsInput | string
   }
 
   export type Mutation_logCreateManyInput = {
     id: string
     mutation: string
     argsjson: string
-    schemahash: number
-    createdat: string
-    syncstatus: string
   }
 
   export type Mutation_logUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     mutation?: StringFieldUpdateOperationsInput | string
     argsjson?: StringFieldUpdateOperationsInput | string
-    schemahash?: IntFieldUpdateOperationsInput | number
-    createdat?: StringFieldUpdateOperationsInput | string
-    syncstatus?: StringFieldUpdateOperationsInput | string
   }
 
   export type Mutation_logUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     mutation?: StringFieldUpdateOperationsInput | string
     argsjson?: StringFieldUpdateOperationsInput | string
-    schemahash?: IntFieldUpdateOperationsInput | number
-    createdat?: StringFieldUpdateOperationsInput | string
-    syncstatus?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter = {
@@ -1959,50 +1857,22 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     not?: NestedStringFilter | string
   }
 
-  export type IntFilter = {
-    equals?: number
-    in?: Enumerable<number>
-    notIn?: Enumerable<number>
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedIntFilter | number
-  }
-
   export type Mutation_logCountOrderByAggregateInput = {
     id?: SortOrder
     mutation?: SortOrder
     argsjson?: SortOrder
-    schemahash?: SortOrder
-    createdat?: SortOrder
-    syncstatus?: SortOrder
-  }
-
-  export type Mutation_logAvgOrderByAggregateInput = {
-    schemahash?: SortOrder
   }
 
   export type Mutation_logMaxOrderByAggregateInput = {
     id?: SortOrder
     mutation?: SortOrder
     argsjson?: SortOrder
-    schemahash?: SortOrder
-    createdat?: SortOrder
-    syncstatus?: SortOrder
   }
 
   export type Mutation_logMinOrderByAggregateInput = {
     id?: SortOrder
     mutation?: SortOrder
     argsjson?: SortOrder
-    schemahash?: SortOrder
-    createdat?: SortOrder
-    syncstatus?: SortOrder
-  }
-
-  export type Mutation_logSumOrderByAggregateInput = {
-    schemahash?: SortOrder
   }
 
   export type StringWithAggregatesFilter = {
@@ -2023,32 +1893,8 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     _max?: NestedStringFilter
   }
 
-  export type IntWithAggregatesFilter = {
-    equals?: number
-    in?: Enumerable<number>
-    notIn?: Enumerable<number>
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedIntWithAggregatesFilter | number
-    _count?: NestedIntFilter
-    _avg?: NestedFloatFilter
-    _sum?: NestedIntFilter
-    _min?: NestedIntFilter
-    _max?: NestedIntFilter
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type NestedStringFilter = {
@@ -2063,17 +1909,6 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     startsWith?: string
     endsWith?: string
     not?: NestedStringFilter | string
-  }
-
-  export type NestedIntFilter = {
-    equals?: number
-    in?: Enumerable<number>
-    notIn?: Enumerable<number>
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedIntFilter | number
   }
 
   export type NestedStringWithAggregatesFilter = {
@@ -2093,7 +1928,7 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     _max?: NestedStringFilter
   }
 
-  export type NestedIntWithAggregatesFilter = {
+  export type NestedIntFilter = {
     equals?: number
     in?: Enumerable<number>
     notIn?: Enumerable<number>
@@ -2101,23 +1936,7 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     lte?: number
     gt?: number
     gte?: number
-    not?: NestedIntWithAggregatesFilter | number
-    _count?: NestedIntFilter
-    _avg?: NestedFloatFilter
-    _sum?: NestedIntFilter
-    _min?: NestedIntFilter
-    _max?: NestedIntFilter
-  }
-
-  export type NestedFloatFilter = {
-    equals?: number
-    in?: Enumerable<number>
-    notIn?: Enumerable<number>
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedFloatFilter | number
+    not?: NestedIntFilter | number
   }
 
 
