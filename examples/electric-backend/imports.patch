@@ -1,0 +1,10 @@
+2c2
+< import type { Prisma } from './prismaClient';
+---
+> import type { Prisma } from './prismaClient.js';
+4,5c4,5
+< import migrations from './migrations';
+< import pgMigrations from './pg-migrations';
+---
+> import migrations from './migrations.js';
+> import pgMigrations from './pg-migrations.js';
