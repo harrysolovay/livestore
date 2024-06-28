@@ -35,7 +35,12 @@ export const makeWsSync = (roomId: string): Effect.Effect<SyncImpl, never, Scope
           
           const events: MutationEvent.AnyEncoded[] = yield* Effect.promise(async () => {
             const currTime = Date.now()
-            const { synced } = await electric.db.mutation_log.sync()
+            const { synced } = await electric.db.mutation_log.sync({
+              where: {
+                room: roomId
+              },
+            
+            })
             await synced
             if(cursor === undefined){
               console.log('synching shape took', Date.now() - currTime, 'ms')         
@@ -67,7 +72,8 @@ export const makeWsSync = (roomId: string): Effect.Effect<SyncImpl, never, Scope
               data: {
                 id: mutationEventEncoded.id,
                 mutation: mutationEventEncoded.mutation,
-                argsjson: JSON.stringify(mutationEventEncoded.args ?? {})                
+                argsjson: JSON.stringify(mutationEventEncoded.args ?? {}),
+                room: roomId,
               },
             }),
           )

@@ -20,6 +20,7 @@ export type Mutation_log = {
   id: string
   mutation: string
   argsjson: string
+  room: string
 }
 
 
@@ -818,18 +819,21 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id: string | null
     mutation: string | null
     argsjson: string | null
+    room: string | null
   }
 
   export type Mutation_logMaxAggregateOutputType = {
     id: string | null
     mutation: string | null
     argsjson: string | null
+    room: string | null
   }
 
   export type Mutation_logCountAggregateOutputType = {
     id: number
     mutation: number
     argsjson: number
+    room: number
     _all: number
   }
 
@@ -838,18 +842,21 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id?: true
     mutation?: true
     argsjson?: true
+    room?: true
   }
 
   export type Mutation_logMaxAggregateInputType = {
     id?: true
     mutation?: true
     argsjson?: true
+    room?: true
   }
 
   export type Mutation_logCountAggregateInputType = {
     id?: true
     mutation?: true
     argsjson?: true
+    room?: true
     _all?: true
   }
 
@@ -935,6 +942,7 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id: string
     mutation: string
     argsjson: string
+    room: string
     _count: Mutation_logCountAggregateOutputType | null
     _min: Mutation_logMinAggregateOutputType | null
     _max: Mutation_logMaxAggregateOutputType | null
@@ -958,6 +966,7 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id?: boolean
     mutation?: boolean
     argsjson?: boolean
+    room?: boolean
   }
 
 
@@ -1726,7 +1735,8 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
   export const Mutation_logScalarFieldEnum: {
     id: 'id',
     mutation: 'mutation',
-    argsjson: 'argsjson'
+    argsjson: 'argsjson',
+    room: 'room'
   };
 
   export type Mutation_logScalarFieldEnum = (typeof Mutation_logScalarFieldEnum)[keyof typeof Mutation_logScalarFieldEnum]
@@ -1770,12 +1780,14 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id?: StringFilter | string
     mutation?: StringFilter | string
     argsjson?: StringFilter | string
+    room?: StringFilter | string
   }
 
   export type Mutation_logOrderByWithRelationInput = {
     id?: SortOrder
     mutation?: SortOrder
     argsjson?: SortOrder
+    room?: SortOrder
   }
 
   export type Mutation_logWhereUniqueInput = {
@@ -1786,6 +1798,7 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id?: SortOrder
     mutation?: SortOrder
     argsjson?: SortOrder
+    room?: SortOrder
     _count?: Mutation_logCountOrderByAggregateInput
     _max?: Mutation_logMaxOrderByAggregateInput
     _min?: Mutation_logMinOrderByAggregateInput
@@ -1798,48 +1811,56 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id?: StringWithAggregatesFilter | string
     mutation?: StringWithAggregatesFilter | string
     argsjson?: StringWithAggregatesFilter | string
+    room?: StringWithAggregatesFilter | string
   }
 
   export type Mutation_logCreateInput = {
     id: string
     mutation: string
     argsjson: string
+    room: string
   }
 
   export type Mutation_logUncheckedCreateInput = {
     id: string
     mutation: string
     argsjson: string
+    room: string
   }
 
   export type Mutation_logUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     mutation?: StringFieldUpdateOperationsInput | string
     argsjson?: StringFieldUpdateOperationsInput | string
+    room?: StringFieldUpdateOperationsInput | string
   }
 
   export type Mutation_logUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     mutation?: StringFieldUpdateOperationsInput | string
     argsjson?: StringFieldUpdateOperationsInput | string
+    room?: StringFieldUpdateOperationsInput | string
   }
 
   export type Mutation_logCreateManyInput = {
     id: string
     mutation: string
     argsjson: string
+    room: string
   }
 
   export type Mutation_logUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     mutation?: StringFieldUpdateOperationsInput | string
     argsjson?: StringFieldUpdateOperationsInput | string
+    room?: StringFieldUpdateOperationsInput | string
   }
 
   export type Mutation_logUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     mutation?: StringFieldUpdateOperationsInput | string
     argsjson?: StringFieldUpdateOperationsInput | string
+    room?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter = {
@@ -1861,18 +1882,21 @@ export type InputJsonValue = null | string | number | boolean | InputJsonObject 
     id?: SortOrder
     mutation?: SortOrder
     argsjson?: SortOrder
+    room?: SortOrder
   }
 
   export type Mutation_logMaxOrderByAggregateInput = {
     id?: SortOrder
     mutation?: SortOrder
     argsjson?: SortOrder
+    room?: SortOrder
   }
 
   export type Mutation_logMinOrderByAggregateInput = {
     id?: SortOrder
     mutation?: SortOrder
     argsjson?: SortOrder
+    room?: SortOrder
   }
 
   export type StringWithAggregatesFilter = {
