@@ -94,7 +94,7 @@ const makeWorkerRunner = ({ schema }: WorkerOptions) =>
           ).pipe(Effect.catchAll(() => Effect.succeed(undefined)))
 
           const syncImpl =
-            syncOptions === undefined ? undefined : yield* makeWsSync(syncOptions.roomId)
+            syncOptions === undefined ? undefined : yield* makeWsSync(syncOptions.url, syncOptions.roomId)
 
           const keySuffix = key ? `-${key}` : ''
 

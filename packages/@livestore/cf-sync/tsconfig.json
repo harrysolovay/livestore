@@ -4,7 +4,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
-    "types": ["@cloudflare/workers-types"]
+    "types": []
   },
   "include": ["./src"],
   "references": [{ "path": "../common" }, { "path": "../utils" }]

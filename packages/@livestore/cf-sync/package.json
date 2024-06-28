@@ -16,19 +16,14 @@
     }
   },
   "scripts": {
-    "deploy": "wrangler publish",
     "test": "echo 'No tests yet'"
   },
   "dependencies": {
     "@livestore/common": "workspace:*",
     "@livestore/utils": "workspace:*",
-    "electric-sql": "^0.12.0",
-    "wa-sqlite": "github:rhashimoto/wa-sqlite#semver:^0.9.8",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@cloudflare/workers-types": "4.20240614.0",
-    "wrangler": "^3.60.2"
+    "electric-sql": "^0.12.1",
+    "wa-sqlite": "github:rhashimoto/wa-sqlite#semver:^0.9.11",
+    "zod": "3.22.4"
   },
   "publishConfig": {
     "access": "public"

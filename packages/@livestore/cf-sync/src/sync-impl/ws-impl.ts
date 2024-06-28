@@ -9,13 +9,11 @@ import { Electric, schema } from '../generated/client/index.js'
 import { insecureAuthToken } from 'electric-sql/auth'
 import { MutationEvent } from '@livestore/common/schema'
 
-export const makeWsSync = (roomId: string): Effect.Effect<SyncImpl, never, Scope.Scope> =>
+export const makeWsSync = (url: string, roomId: string): Effect.Effect<SyncImpl, never, Scope.Scope> =>
   Effect.gen(function* () {    
-    // TODO: env vars
     const config: ElectricConfig = {
-      url: 'ws://localhost:5133',
-      debug: true,
-      disableForeignKeysDownstream: true,
+      url,
+      debug: true
     }
 
     const dbName = `livestore-${roomId}`
@@ -31,8 +29,7 @@ export const makeWsSync = (roomId: string): Effect.Effect<SyncImpl, never, Scope
     const api = {
       isConnected,
       pull: (cursor) =>
-        Effect.gen(function* () {
-          
+        Effect.gen(function* () {          
           const events: MutationEvent.AnyEncoded[] = yield* Effect.promise(async () => {
             const currTime = Date.now()
             const { synced } = await electric.db.mutation_log.sync({
@@ -58,7 +55,7 @@ export const makeWsSync = (roomId: string): Effect.Effect<SyncImpl, never, Scope
               .filter((_) => (cursor ? _.id > cursor : true))
           })
 
-          // TODO: should write in batch for initial sync
+          // initial sync can be quite large, would be useful to batch
           return Stream.fromIterable(events)
         }).pipe(Stream.unwrap),
       pushes: Stream.fromQueue(queue).pipe(
@@ -66,7 +63,7 @@ export const makeWsSync = (roomId: string): Effect.Effect<SyncImpl, never, Scope
       ),        
       push: (mutationEventEncoded) =>
         Effect.gen(function* () {
-          // TODO: here we don't wait for any ack from the server, while original impl would
+          // removed ack. electric handles txns async
           yield* Effect.promise(async () =>
             electric?.db.mutation_log.create({
               data: {
