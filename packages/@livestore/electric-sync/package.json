@@ -1,5 +1,5 @@
 {
-  "name": "@livestore/cf-sync",
+  "name": "@livestore/electric-sync",
   "version": "0.0.53",
   "type": "module",
   "exports": {

@@ -38,8 +38,8 @@
     "test": "echo No tests yet"
   },
   "dependencies": {
-    "@livestore/cf-sync": "workspace:*",
     "@livestore/common": "workspace:*",
+    "@livestore/electric-sync": "workspace:*",
     "@livestore/sqlite-wasm": "3.46.0-build4",
     "@livestore/utils": "workspace:*",
     "@opentelemetry/api": "^1.9.0"

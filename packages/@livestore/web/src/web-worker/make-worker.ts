@@ -1,4 +1,4 @@
-import { makeWsSync } from '@livestore/cf-sync/sync-impl'
+import { makeWsSync } from '@livestore/electric-sync/sync-impl'
 import { sql } from '@livestore/common'
 import { type LiveStoreSchema, makeMutationEventSchema, MUTATION_LOG_META_TABLE } from '@livestore/common/schema'
 import sqlite3InitModule from '@livestore/sqlite-wasm'
