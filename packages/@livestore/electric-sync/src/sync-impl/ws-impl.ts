@@ -10,10 +10,10 @@ import { insecureAuthToken } from 'electric-sql/auth'
 import { MutationEvent } from '@livestore/common/schema'
 
 export const makeWsSync = (url: string, roomId: string): Effect.Effect<SyncImpl, never, Scope.Scope> =>
-  Effect.gen(function* () {    
+  Effect.gen(function* () {
     const config: ElectricConfig = {
       url,
-      debug: true
+      debug: true,
     }
 
     const dbName = `livestore-${roomId}`
@@ -22,26 +22,25 @@ export const makeWsSync = (url: string, roomId: string): Effect.Effect<SyncImpl,
       const conn = await ElectricDatabase.init(dbName)
       return electrify(conn, schema, config)
     })
-    
+
     const queue = yield* Queue.bounded<MutationEvent.AnyEncoded>(100)
     const { isConnected } = yield* connect(electric, queue)
-    
+
     const api = {
       isConnected,
       pull: (cursor) =>
-        Effect.gen(function* () {          
+        Effect.gen(function* () {
           const events: MutationEvent.AnyEncoded[] = yield* Effect.promise(async () => {
             const currTime = Date.now()
             const { synced } = await electric.db.mutation_log.sync({
               where: {
-                room: roomId
+                room: roomId,
               },
-            
             })
             await synced
-            if(cursor === undefined){
-              console.log('synching shape took', Date.now() - currTime, 'ms')         
-            }else{
+            if (cursor === undefined) {
+              console.log('synching shape took', Date.now() - currTime, 'ms')
+            } else {
               console.log('initial shape already synced. Will catch up with pending changes')
             }
 
@@ -58,9 +57,7 @@ export const makeWsSync = (url: string, roomId: string): Effect.Effect<SyncImpl,
           // initial sync can be quite large, would be useful to batch
           return Stream.fromIterable(events)
         }).pipe(Stream.unwrap),
-      pushes: Stream.fromQueue(queue).pipe(
-        Stream.map((_) => ({ mutationEventEncoded: _, persisted: true })),
-      ),        
+      pushes: Stream.fromQueue(queue).pipe(Stream.map((_) => ({ mutationEventEncoded: _, persisted: true }))),
       push: (mutationEventEncoded) =>
         Effect.gen(function* () {
           // removed ack. electric handles txns async
@@ -82,7 +79,6 @@ export const makeWsSync = (url: string, roomId: string): Effect.Effect<SyncImpl,
 
 const connect = (electric: Electric, queue: Queue.Queue<MutationEvent.AnyEncoded>) =>
   Effect.gen(function* () {
-    
     const isConnected = yield* SubscriptionRef.make(false)
     let userId = 'FAKE_USER_ID'
     const authToken = insecureAuthToken({ sub: userId })
@@ -90,13 +86,12 @@ const connect = (electric: Electric, queue: Queue.Queue<MutationEvent.AnyEncoded
 
     const unsubConnectivityCb = electric.notifier.subscribeToConnectivityStateChanges((event) => {
       Effect.runSync(
-        Effect.sync(() =>{
-          console.log("isConnected")
+        Effect.sync(() => {
+          console.log('isConnected')
           event.connectivityState.status === 'connected'
             ? SubscriptionRef.set(isConnected, true)
             : SubscriptionRef.set(isConnected, false)
-          }
-        ),
+        }),
       )
     })
 
@@ -136,8 +131,8 @@ const connect = (electric: Electric, queue: Queue.Queue<MutationEvent.AnyEncoded
 
       Effect.runPromise(pushChanges)
     })
-    
-    // TODO: check connectivity events          
+
+    // TODO: check connectivity events
     SubscriptionRef.set(isConnected, true).pipe(Effect.runSync)
 
     const waitUntilOnline = SubscriptionRef.changeStreamIncludingCurrent(isConnected).pipe(
@@ -186,5 +181,5 @@ const connect = (electric: Electric, queue: Queue.Queue<MutationEvent.AnyEncoded
 
     yield* innerConnect.pipe(Effect.forever, Effect.tapCauseLogPretty, Effect.forkScoped)
 
-    return { isConnected}
+    return { isConnected }
   })
