@@ -1,8 +1,7 @@
 import { Icon } from '@/components/icons'
 import { NewIssueButton } from '@/components/layout/sidebar/new-issue-button'
 import { StatusDetails } from '@/data/status-options'
-import { useDebounce } from '@/hooks/useDebounce'
-import { filterState$, useFilterState, useScrollState } from '@/lib/livestore/queries'
+import { filterState$, useFilterState } from '@/lib/livestore/queries'
 import { mutations, tables } from '@/lib/livestore/schema'
 import { filterStateToWhere } from '@/lib/livestore/utils'
 import { Status } from '@/types/status'
@@ -25,9 +24,6 @@ import AutoSizer from 'react-virtualized-auto-sizer'
 import { Card } from './card'
 
 export const Column = ({ status, statusDetails }: { status: Status; statusDetails: StatusDetails }) => {
-  // TODO: Hook up scroll state again
-  const [scrollState, setScrollState] = useScrollState()
-  const onScroll = useDebounce((e) => {}, 100)
   const { store } = useStore()
   const [filterState] = useFilterState()
 

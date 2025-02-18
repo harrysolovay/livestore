@@ -30,13 +30,19 @@ export const Issue = () => {
     else navigate('/')
   }
 
-  const handleChangeStatus = (status: Status) => {
-    store.mutate(mutations.updateIssueStatus({ id: issue.id, status }))
-  }
+  const handleChangeStatus = React.useCallback(
+    (status: Status) => {
+      store.mutate(mutations.updateIssueStatus({ id: issue.id, status }))
+    },
+    [store, issue.id],
+  )
 
-  const handleChangePriority = (priority: Priority) => {
-    store.mutate(mutations.updateIssuePriority({ id: issue.id, priority }))
-  }
+  const handleChangePriority = React.useCallback(
+    (priority: Priority) => {
+      store.mutate(mutations.updateIssuePriority({ id: issue.id, priority }))
+    },
+    [store, issue.id],
+  )
 
   return (
     <div className="flex flex-col h-full">
