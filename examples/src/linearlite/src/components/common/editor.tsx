@@ -6,7 +6,7 @@ import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 import { BubbleMenu, EditorContent, useEditor, type Extensions } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Markdown } from 'tiptap-markdown'
 
 const Editor = ({
@@ -22,7 +22,7 @@ const Editor = ({
   className?: string
   placeholder?: string
 }) => {
-  const markdownValue = React.useRef<string | null>(null)
+  const markdownValue = useRef<string | null>(null)
   const extensions: Extensions = [StarterKit, Markdown, Table, TableRow, TableHeader, TableCell]
   const editor = useEditor({
     extensions,
@@ -48,7 +48,7 @@ const Editor = ({
 
   if (placeholder) extensions.push(Placeholder.configure({ placeholder }))
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (editor && markdownValue.current !== value) editor.commands.setContent(value)
   }, [value, editor])
 

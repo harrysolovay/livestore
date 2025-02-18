@@ -6,9 +6,9 @@ import { Status } from '@/types/status'
 import { LiveStoreProvider } from '@livestore/react'
 import { makeAdapter } from '@livestore/web'
 import LiveStoreSharedWorker from '@livestore/web/shared-worker?sharedworker'
+import { useNavigate } from '@tanstack/react-router'
 import React from 'react'
 import { unstable_batchedUpdates as batchUpdates } from 'react-dom'
-import { useNavigate } from 'react-router-dom'
 
 const resetPersistence = import.meta.env.DEV && new URLSearchParams(window.location.search).get('reset') !== null
 
@@ -42,7 +42,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
         }
       }
       if (e.key === '/' && e.shiftKey) {
-        navigate('/search')
+        navigate({ to: '/search' })
         e.preventDefault()
       }
     }

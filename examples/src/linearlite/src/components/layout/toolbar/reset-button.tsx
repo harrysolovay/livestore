@@ -1,7 +1,7 @@
 import { TrashIcon } from '@heroicons/react/16/solid'
+import { useNavigate } from '@tanstack/react-router'
 import React from 'react'
 import { Button } from 'react-aria-components'
-import { useNavigate } from 'react-router-dom'
 
 export const ResetButton = ({ className }: { className?: string }) => {
   const [confirm, setConfirm] = React.useState(false)
@@ -9,7 +9,7 @@ export const ResetButton = ({ className }: { className?: string }) => {
 
   const onClick = () => {
     if (confirm) {
-      navigate('/?reset')
+      navigate({ to: '/', search: { reset: 'true' } })
       window.location.reload()
     }
     setConfirm(true)

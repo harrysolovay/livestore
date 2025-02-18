@@ -6,8 +6,8 @@ import { ThemeButton } from '@/components/layout/sidebar/theme-button'
 import { ToolbarButton } from '@/components/layout/toolbar/toolbar-button'
 import { useFilterState } from '@/lib/livestore/queries'
 import { Bars4Icon, ViewColumnsIcon } from '@heroicons/react/24/outline'
+import { Link } from '@tanstack/react-router'
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 export const Sidebar = ({ className }: { className?: string }) => {
   const [, setFilterState] = useFilterState()

@@ -8,9 +8,9 @@ import { Status } from '@/types/status'
 import { formatDate } from '@/utils/format-date'
 import { getIssueTag } from '@/utils/get-issue-tag'
 import { useStore } from '@livestore/react'
+import { useNavigate } from '@tanstack/react-router'
 import type { CSSProperties } from 'react'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 
 export const Row = React.memo(({ issue, style }: { issue: Issue; style: CSSProperties }) => {
   const navigate = useNavigate()
@@ -31,7 +31,7 @@ export const Row = React.memo(({ issue, style }: { issue: Issue; style: CSSPrope
       key={issue.id}
       id={issue.id.toString()}
       className="flex items-center gap-4 justify-between pr-4 pl-2 lg:pl-4 w-full text-sm border-b last:border-b-0 border-neutral-200 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 dark:border-neutral-700"
-      onClick={() => navigate(`/issue/${issue.id}`)}
+      onClick={() => navigate({ to: '/issue/$id', params: { id: issue.id } })}
       style={style}
     >
       <div className="flex items-center gap-px">

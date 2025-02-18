@@ -1,3 +1,4 @@
+import { issueRoute } from '@/app/main'
 import { Avatar } from '@/components/common/avatar'
 import { MenuButton } from '@/components/common/menu-button'
 import { PriorityMenu } from '@/components/common/priority-menu'
@@ -15,19 +16,20 @@ import { formatDate } from '@/utils/format-date'
 import { getIssueTag } from '@/utils/get-issue-tag'
 import { ChevronRightIcon } from '@heroicons/react/16/solid'
 import { useRow, useStore } from '@livestore/react'
+import { useNavigate, useRouter } from '@tanstack/react-router'
 import React from 'react'
 import { Button } from 'react-aria-components'
-import { useNavigate, useParams } from 'react-router-dom'
 
 export const Issue = () => {
-  const id = Number(useParams().id ?? 0)
+  const { id } = issueRoute.useParams()
+  const router = useRouter()
   const navigate = useNavigate()
   const { store } = useStore()
   const [issue] = useRow(tables.issue, id)
 
   const close = () => {
-    if (window.history.length > 2) navigate(-1)
-    else navigate('/')
+    if (window.history.length > 2) router.history.back()
+    else navigate({ to: '/' })
   }
 
   const handleChangeStatus = React.useCallback(
