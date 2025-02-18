@@ -129,7 +129,7 @@ export const Column = ({ status, statusDetails }: { status: Status; statusDetail
                   <GridListItem
                     textValue={issue.id.toString()}
                     aria-label={`Issue ${issue.id}: ${issue.title}`}
-                    className="group data-[dragging]:opacity-50 w-full px-2 focus:outline-none"
+                    className="group data-dragging:opacity-50 w-full px-2 focus:outline-hidden"
                   >
                     <Card issue={issue} />
                   </GridListItem>

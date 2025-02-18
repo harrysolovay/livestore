@@ -52,7 +52,7 @@ export const Sidebar = ({ className }: { className?: string }) => {
                 onClick()
                 setShowMenu(false)
               }}
-              className="flex items-center gap-2 px-2 h-8 rounded-md focus:outline-none dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 hover:bg-neutral-100 focus:bg-neutral-100"
+              className="flex items-center gap-2 px-2 h-8 rounded-md focus:outline-hidden dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 hover:bg-neutral-100 focus:bg-neutral-100"
             >
               <Icon className="size-4" />
               <span>{title}</span>

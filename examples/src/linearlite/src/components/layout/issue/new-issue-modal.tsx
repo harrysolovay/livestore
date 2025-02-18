@@ -63,11 +63,11 @@ export const NewIssueModal = () => {
         <h2 className="px-2 py-3 leading-none text-2xs uppercase font-medium tracking-wide text-neutral-400">
           New issue
         </h2>
-        <TitleInput title={title} setTitle={setTitle} className="focus:!bg-transparent" autoFocus />
+        <TitleInput title={title} setTitle={setTitle} className="focus:bg-transparent!" autoFocus />
         <DescriptionInput
           description={description}
           setDescription={setDescription}
-          className="focus:!bg-transparent -mt-2"
+          className="focus:bg-transparent! -mt-2"
         />
         <div className="mt-2 flex gap-px w-full">
           <StatusMenu
@@ -79,7 +79,7 @@ export const NewIssueModal = () => {
           <Button
             onPress={createIssue}
             aria-label="Create issue"
-            className="ml-auto bg-orange-500 rounded-lg text-white text-sm px-4 hover:bg-orange-400 focus:outline-none focus:bg-orange-400"
+            className="ml-auto bg-orange-500 rounded-lg text-white text-sm px-4 hover:bg-orange-400 focus:outline-hidden focus:bg-orange-400"
           >
             Create issue
           </Button>

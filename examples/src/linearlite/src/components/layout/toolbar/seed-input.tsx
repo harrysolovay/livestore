@@ -22,12 +22,12 @@ export const SeedInput = ({ className }: { className?: string }) => {
         type="number"
         value={count}
         onChange={(e) => setCount(Number(e.target.value))}
-        className="h-6 px-1.5 border-none rounded-l text-xs bg-neutral-800 placeholder:text-neutral-500 text-neutral-300 w-12 focus:outline-none focus:ring-0 focus:border-none hover:bg-neutral-700 focus:bg-neutral-700"
+        className="h-6 px-1.5 border-none rounded-l text-xs bg-neutral-800 placeholder:text-neutral-500 text-neutral-300 w-12 focus:outline-hidden focus:ring-0 focus:border-none hover:bg-neutral-700 focus:bg-neutral-700"
       />
       <Button
         aria-label="Seed database"
         onPress={onClick}
-        className="h-6 flex items-center gap-1 pl-1 pr-1.5 bg-neutral-800 rounded-r hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
+        className="h-6 flex items-center gap-1 pl-1 pr-1.5 bg-neutral-800 rounded-r hover:bg-neutral-700 focus:outline-hidden focus:bg-neutral-700"
       >
         <PlusIcon className="size-3" />
         <span>Seed</span>

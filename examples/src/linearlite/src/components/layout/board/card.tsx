@@ -21,7 +21,7 @@ export const Card = ({ issue, className }: { issue: Issue; className?: string })
 
   return (
     <div
-      className={`p-2 text-sm bg-white dark:bg-neutral-900 rounded-md shadow-sm dark:shadow-none border border-transparent dark:border-neutral-700/50 cursor-pointer h-full ${className ?? ''}`}
+      className={`p-2 text-sm bg-white dark:bg-neutral-900 rounded-md shadow-xs dark:shadow-none border border-transparent dark:border-neutral-700/50 cursor-pointer h-full ${className ?? ''}`}
       onClick={() => navigate(`/issue/${issue.id}`)}
     >
       <Button slot="drag" className="size-0 absolute left-0 top-0" />

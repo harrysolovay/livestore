@@ -22,7 +22,7 @@ export const SearchBar = () => {
       <Input
         type="text"
         autoFocus
-        className="input w-full border-none pl-2 lg:pl-3 bg-transparent focus:outline-none focus:ring-0 placholder:text-neutral-400 dark:placeholder:text-neutral-500 dark:text-neutral-200 text-neutral-800 text-sm"
+        className="input w-full border-none pl-2 lg:pl-3 bg-transparent focus:outline-hidden focus:ring-0 placholder:text-neutral-400 dark:placeholder:text-neutral-500 dark:text-neutral-200 text-neutral-800 text-sm"
         value={filterState.query ?? ''}
         placeholder="Search issues..."
         onChange={(e) => setFilterState((state) => ({ ...state, query: e.target.value }))}

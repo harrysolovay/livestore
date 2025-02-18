@@ -17,7 +17,7 @@ export const Toolbar = () => {
         <Link
           to="https://livestore.dev/"
           target="_blank"
-          className="flex items-center gap-2 text-sm font-bold rounded text-neutral-300 bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 px-1.5 h-6"
+          className="flex items-center gap-2 text-sm font-bold rounded-sm text-neutral-300 bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 px-1.5 h-6"
         >
           <Icon name="livestore" className="size-5 mt-0.5" />
           <span>LiveStore</span>

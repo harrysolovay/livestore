@@ -13,7 +13,7 @@ export const MobileMenu = () => {
       <DialogTrigger>
         <Button
           aria-label="Open LiveStore tools"
-          className="h-8 border-y border-neutral-700 flex items-center gap-1 pr-2 pl-3 focus:outline-none hover:bg-neutral-800 text-sm text-neutral-400 focus:bg-neutral-800"
+          className="h-8 border-y border-neutral-700 flex items-center gap-1 pr-2 pl-3 focus:outline-hidden hover:bg-neutral-800 text-sm text-neutral-400 focus:bg-neutral-800"
         >
           <span>Tools</span>
           <ChevronUpIcon className="size-4" />

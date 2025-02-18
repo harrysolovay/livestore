@@ -23,7 +23,7 @@ export const ResetButton = ({ className }: { className?: string }) => {
       <Button
         aria-label="Reset database"
         onPress={onClick}
-        className={`h-6 px-1.5 flex items-center gap-1 bg-neutral-800 rounded hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700 ${confirm ? 'text-red-500' : 'text-neutral-400'}`}
+        className={`h-6 px-1.5 flex items-center gap-1 bg-neutral-800 rounded-sm hover:bg-neutral-700 focus:outline-hidden focus:bg-neutral-700 ${confirm ? 'text-red-500' : 'text-neutral-400'}`}
       >
         <TrashIcon className="size-3 shrink-0" />
         <span>{confirm ? 'Confirm' : 'Reset'}</span>

@@ -49,7 +49,7 @@ export const Filters = ({
           <FilterMenu type={hideStatusFilter ? 'priority' : undefined}>
             <Button
               aria-label="Select filters"
-              className="group h-6 min-w-6 rounded-lg flex gap-1.5 px-1.5 items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:bg-neutral-100 dark:focus:bg-neutral-800 text-xs font-medium"
+              className="group h-6 min-w-6 rounded-lg flex gap-1.5 px-1.5 items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-hidden focus:bg-neutral-100 dark:focus:bg-neutral-800 text-xs font-medium"
             >
               <Icon name="filter" className="size-3.5" />
               <span className={filterState.status?.length || filterState.priority?.length ? 'lg:hidden' : ''}>

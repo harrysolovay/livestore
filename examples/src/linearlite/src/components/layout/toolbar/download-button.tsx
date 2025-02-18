@@ -14,7 +14,7 @@ export const DownloadButton = ({ className }: { className?: string }) => {
       <Button
         aria-label="Download database"
         onPress={onClick}
-        className="h-6 px-1.5 flex items-center gap-1 bg-neutral-800 rounded hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
+        className="h-6 px-1.5 flex items-center gap-1 bg-neutral-800 rounded-sm hover:bg-neutral-700 focus:outline-hidden focus:bg-neutral-700"
       >
         <ArrowDownIcon className="size-3 shrink-0" />
         <span>Download</span>

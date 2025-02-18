@@ -45,7 +45,7 @@ export const Issue = () => {
           <MenuButton className="lg:hidden" />
           <Button
             aria-label="Back to issues"
-            className="font-medium hover:text-neutral-800 dark:hover:text-neutral-100 focus:outline-none ml-2 lg:ml-0"
+            className="font-medium hover:text-neutral-800 dark:hover:text-neutral-100 focus:outline-hidden ml-2 lg:ml-0"
             onPress={close}
           >
             Issues

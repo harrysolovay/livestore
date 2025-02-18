@@ -24,7 +24,7 @@ export const ShareButton = ({ className }: { className?: string }) => {
         <Button
           aria-label="Copy workspace URL"
           onPress={copyUrl}
-          className="h-6 px-1.5 flex items-center gap-1 bg-neutral-800 rounded hover:bg-neutral-700 focus:bg-neutral-700 focus:outline-none whitespace-nowrap"
+          className="h-6 px-1.5 flex items-center gap-1 bg-neutral-800 rounded-sm hover:bg-neutral-700 focus:bg-neutral-700 focus:outline-hidden whitespace-nowrap"
         >
           {copied ? (
             <>
@@ -46,7 +46,7 @@ export const ShareButton = ({ className }: { className?: string }) => {
         <Button
           aria-label="Copy workspace URL"
           onPress={() => setShowQR(true)}
-          className="size-6 flex items-center justify-center bg-neutral-800 rounded hover:bg-neutral-700 focus:outline-none focus:bg-neutral-800"
+          className="size-6 flex items-center justify-center bg-neutral-800 rounded-sm hover:bg-neutral-700 focus:outline-hidden focus:bg-neutral-800"
         >
           <QrCodeIcon className="size-3.5" />
         </Button>

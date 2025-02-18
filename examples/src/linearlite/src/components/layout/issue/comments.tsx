@@ -16,7 +16,7 @@ export const Comments = ({ issueId }: { issueId: number }) => {
       {comments.map(({ id, body, creator, created }) => (
         <li
           key={id}
-          className="bg-white dark:bg-neutral-800 border border-transparent dark:border-neutral-700/50 rounded-lg shadow p-4"
+          className="bg-white dark:bg-neutral-800 border border-transparent dark:border-neutral-700/50 rounded-lg shadow-sm p-4"
         >
           <div className="flex items-center -ml-0.5 -mt-0.5 mb-2 text-sm">
             <Avatar name={creator} />

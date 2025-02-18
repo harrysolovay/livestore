@@ -20,7 +20,7 @@ export const PriorityFilter = () => {
         <span>{filterState.priority.length > 1 ? 'is any of' : 'is'}</span>
       </div>
       <FilterMenu type="priority">
-        <Button className="px-2 flex items-center h-full hover:bg-neutral-50 dark:hover:bg-neutral-800 focus:outline-none focus:bg-neutral-100 dark:focus:bg-neutral-800 gap-1.5">
+        <Button className="px-2 flex items-center h-full hover:bg-neutral-50 dark:hover:bg-neutral-800 focus:outline-hidden focus:bg-neutral-100 dark:focus:bg-neutral-800 gap-1.5">
           {filterState.priority.length === 1 ? (
             <>
               <Icon
@@ -38,7 +38,7 @@ export const PriorityFilter = () => {
       </FilterMenu>
       <Button
         onPress={() => setFilterState((state) => ({ ...state, priority: undefined }))}
-        className="h-full flex items-center px-1 group hover:bg-neutral-50 dark:hover:bg-neutral-800 focus:outline-none focus:bg-neutral-100 dark:focus:bg-neutral-800 border-l border-neutral-200 dark:border-neutral-700"
+        className="h-full flex items-center px-1 group hover:bg-neutral-50 dark:hover:bg-neutral-800 focus:outline-hidden focus:bg-neutral-100 dark:focus:bg-neutral-800 border-l border-neutral-200 dark:border-neutral-700"
       >
         <XMarkIcon className="size-4 group-hover:text-neutral-700 dark:group-hover:text-neutral-200" />
       </Button>

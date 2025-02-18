@@ -40,7 +40,7 @@ export const Modal = ({
         <Button
           slot="close"
           onPress={() => setShow(false)}
-          className="absolute top-2 right-2 size-8 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700 flex items-center justify-center"
+          className="absolute top-2 right-2 size-8 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-hidden focus:bg-neutral-700 flex items-center justify-center"
         >
           <XMarkIcon className="size-5" />
         </Button>
