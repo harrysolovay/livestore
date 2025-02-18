@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react'
+import React from 'react'
 
 type Timer = ReturnType<typeof setTimeout>
 
 export const useDebounce = (func: (...args: any[]) => void, delay = 1000) => {
-  const timer = useRef<Timer>(undefined)
+  const timer = React.useRef<Timer>(undefined)
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => {
       if (!timer.current) return
       clearTimeout(timer.current)

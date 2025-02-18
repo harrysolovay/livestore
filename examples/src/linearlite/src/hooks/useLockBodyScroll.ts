@@ -1,7 +1,7 @@
-import { useLayoutEffect } from 'react'
+import React from 'react'
 
 export default function useLockBodyScroll() {
-  useLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     // Get original value of body overflow
     const originalStyle = window.getComputedStyle(document.body).overflow
     // Prevent scrolling on mount

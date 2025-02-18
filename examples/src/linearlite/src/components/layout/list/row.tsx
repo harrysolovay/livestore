@@ -9,10 +9,10 @@ import { formatDate } from '@/utils/format-date'
 import { getIssueTag } from '@/utils/get-issue-tag'
 import { useStore } from '@livestore/react'
 import type { CSSProperties } from 'react'
-import React, { memo } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export const Row = memo(({ issue, style }: { issue: Issue; style: CSSProperties }) => {
+export const Row = React.memo(({ issue, style }: { issue: Issue; style: CSSProperties }) => {
   const navigate = useNavigate()
   const { store } = useStore()
 

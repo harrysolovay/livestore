@@ -1,10 +1,10 @@
 import { MenuContext } from '@/app/contexts'
 import { Icon } from '@/components/icons'
-import React, { useContext } from 'react'
+import React from 'react'
 import { Button } from 'react-aria-components'
 
 export const MenuButton = ({ className }: { className?: string }) => {
-  const { setShowMenu } = useContext(MenuContext)!
+  const { setShowMenu } = React.useContext(MenuContext)!
 
   return (
     <Button
