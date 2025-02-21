@@ -59,10 +59,10 @@ export const Issue = () => {
             Issues
           </Button>
           <ChevronRightIcon className="size-3.5" />
-          <div className="text-neutral-500 dark:text-neutral-400">{getIssueTag(id)}</div>
+          <div className="text-neutral-500 dark:text-neutral-400">{getIssueTag(Number(id))}</div>
         </div>
         <div className="flex items-center gap-px">
-          <DeleteButton issueId={id} close={close} className="hidden lg:block" />
+          <DeleteButton issueId={Number(id)} close={close} className="hidden lg:block" />
           <BackButton close={close} />
         </div>
       </div>
