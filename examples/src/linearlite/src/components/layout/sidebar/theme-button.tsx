@@ -42,7 +42,7 @@ export const ThemeButton = () => {
 
   React.useEffect(() => {
     if (frontendState.theme) {
-      setTheme(frontendState.theme === 'system' ? undefined : frontendState.theme)
+      setTheme(frontendState.theme)
     }
   }, [frontendState.theme])
 
