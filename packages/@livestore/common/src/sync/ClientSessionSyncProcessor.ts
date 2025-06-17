@@ -38,7 +38,7 @@ export const makeClientSessionSyncProcessor = ({
   runtime: Runtime.Runtime<Scope.Scope>
   materializeEvent: (
     eventDecoded: LiveStoreEvent.PartialAnyDecoded,
-    options: { otelContext: otel.Context; withChangeset: boolean; materializerHashLeader: Option.Option<number> },
+    options: { withChangeset: boolean; materializerHashLeader: Option.Option<number> },
   ) => Effect.Effect<{
     writeTables: Set<string>
     sessionChangeset: { _tag: 'sessionChangeset'; data: Uint8Array; debug: any } | { _tag: 'no-op' } | { _tag: 'unset' }
@@ -76,10 +76,7 @@ export const makeClientSessionSyncProcessor = ({
   /** We're queuing push requests to reduce the number of messages sent to the leader by batching them */
   const leaderPushQueue = BucketQueue.make<LiveStoreEvent.EncodedWithMeta>().pipe(Effect.runSync)
 
-  const push: ClientSessionSyncProcessor['push'] = Effect.fn('client-session-sync-processor:push')(function* (
-    batch,
-    { otelContext },
-  ) {
+  const push: ClientSessionSyncProcessor['push'] = Effect.fn('client-session-sync-processor:push')(function* (batch) {
     // TODO validate batch
 
     let baseEventSequenceNumber = syncStateRef.current.localHead
@@ -131,7 +128,6 @@ export const makeClientSessionSyncProcessor = ({
         sessionChangeset,
         materializerHash,
       } = yield* materializeEvent(decodedEventDef, {
-        otelContext,
         withChangeset: true,
         materializerHashLeader: Option.none(),
       })
@@ -156,8 +152,6 @@ export const makeClientSessionSyncProcessor = ({
     advanceCount: 0,
     rejectCount: 0,
   }
-
-  const otelContext = otel.trace.setSpan(otel.context.active(), span)
 
   const boot: ClientSessionSyncProcessor['boot'] = Effect.gen(function* () {
     // eslint-disable-next-line unicorn/prefer-global-this
@@ -285,7 +279,6 @@ export const makeClientSessionSyncProcessor = ({
               sessionChangeset,
               materializerHash,
             } = yield* materializeEvent(decodedEventDef, {
-              otelContext,
               withChangeset: true,
               materializerHashLeader: event.meta.materializerHashLeader,
             })
@@ -342,10 +335,7 @@ export const makeClientSessionSyncProcessor = ({
 }
 
 export interface ClientSessionSyncProcessor {
-  push: (
-    batch: ReadonlyArray<LiveStoreEvent.PartialAnyDecoded>,
-    options: { otelContext: otel.Context },
-  ) => Effect.Effect<
+  push: (batch: ReadonlyArray<LiveStoreEvent.PartialAnyDecoded>) => Effect.Effect<
     {
       writeTables: Set<string>
     },
